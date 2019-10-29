@@ -1,6 +1,19 @@
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
+kluis = {
+    'nummer': 1,
+    'begintijd': datetime.datetime.now(),
+    'user_id': 123
+}
+
+user = {
+    'id': 123,
+    'naam': 'testuser',
+    'email': 'test@gmail.com',
+    'password': '123'
+}
+
 # Haalt login form op
 @app.route('/')
 def get_login():
