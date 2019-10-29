@@ -19,6 +19,9 @@ def post_login():
     # todo 2. bekijk of password matched met password van email, anders redirect terug naar login
     # todo 3. Bij match aanmaken van sessie en redirect naar dashboard.html met juiste parameters
 
-@app.route('/register', methods=['GET'])
+@app.route('/dashboard')
 def get_register():
     return render_template('dashboard.html')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, debug=True)
