@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import datetime
 
 app = Flask(__name__)
@@ -32,6 +32,7 @@ def post_login():
     if email == user['email'] and password == user['password']:
 
         print('user is ingelogd')
+        session['logged_in'] == True
         # Tijdelijk
         return redirect(url_for('dashboard'))
     else:
@@ -43,7 +44,13 @@ def post_login():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+
+    if session['logged_in']:
+        
+
+        return render_template('dashboard.html')
+    else:
+        return redirect(url_for('get_login'))
 
 @app.route('/check_kluis')
 def check_kluis():
