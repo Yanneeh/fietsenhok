@@ -10,6 +10,7 @@
         body {
             margin: 0;
         }
+
         header {
             background-color: #ffc917;
             margin: 0;
@@ -19,6 +20,7 @@
             font-weight: 200;
             text-align: center;
         }
+
         .card {
             width: 300px;
             height: 250px;
@@ -28,15 +30,21 @@
             color: #003082;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             margin: 30px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <header>Dashboard</header>
+<header>Dashboard</header>
+{% for kluis in kluizen %}
     <div class="card">
-        Kluisnummer: 24<br>
-        Tijd: 2 uur<br>
-        Kosten: 7 euro<br>
+        <b>Kluisnummer:</b> {{ kluis.nummer }}<br>
+        <b>Tijd:</b> {{ kluis.tijd }} uur<br>
+        <b>Kosten:</b> {{ kluis.prijs }} euro<br>
     </div>
+{% else %}
+    <span>Geen kluizen</span>
+{% endfor %}
+
 </body>
 </html>

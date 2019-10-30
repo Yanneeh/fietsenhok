@@ -8,7 +8,13 @@ kluizen = [
     'nummer': 1,
     'begintijd': datetime.datetime.now() - datetime.timedelta(days=2),
     'kaart_nummer': 123
+    },
+    {
+    'nummer': 2,
+    'begintijd': datetime.datetime.now() - datetime.timedelta(days=4),
+    'kaart_nummer': 123
     }
+
 ]
 
 user = {
@@ -18,7 +24,10 @@ user = {
     'password': '123'
 }
 
-# Haalt login form op
+def calc_price(begintijd):
+    tijd = datetime.datetime.now() - begintijd
+    return round(3.5 * (tijd.total_seconds() / 3600))
+
 @app.route('/')
 def get_login():
     return render_template('login.html')
@@ -30,7 +39,6 @@ def post_login():
     password = request.form['password']
 
     if email == user['email'] and password == user['password']:
-
         print('user is ingelogd')
         # Tijdelijk
         return redirect(url_for('dashboard'))
@@ -43,7 +51,14 @@ def post_login():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    userkluizen = []
+    for kluis in kluizen:
+         if kluis['kaart_nummer'] == user['kaart_nummer']:
+             kluis['prijs'] = calc_price(kluis['begintijd'])
+             kluis['tijd'] = datetime.datetime.now() - kluis['begintijd']
+             userkluizen.append(kluis)
+
+    return render_template('dashboard.html', kluizen=userkluizen)
 
 @app.route('/check_kluis')
 def check_kluis():
@@ -61,11 +76,8 @@ def check_kluis():
     for i in range(len(kluizen)):
         if data['nummer'] == kluizen[i]['nummer']:
             if data['kaart_nummer'] == kluizen[i]['kaart_nummer']:
-                tijd = datetime.datetime.now() - kluizen[i]['begintijd']
 
-                print(tijd.total_seconds() / 3600)
-
-                kosten = 3.5 * (tijd.total_seconds() / 3600)
+                kosten = calc_price(kluizen[i]['begintijd'])
 
                 print('kosten zijn {} euro'.format(kosten))
 
