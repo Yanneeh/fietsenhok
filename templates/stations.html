@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: lightgray;
+        }
+
+        header {
+            background-color: #ffc917;
+            margin: 0;
+            padding: 25px;
+            font-size: 2.5em;
+            color: #003082;
+            font-weight: 200;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin: 18px;
+        }
+
+        select option {
+            height: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        ul li {
+            padding: 20px;
+            margin: 18px;
+            width: 44%;
+            height: 100%;
+            background-color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<header>Station Routes Zoeken</header>
+<form method='POST' action='/stations'>
+    <select name="afkorting">
+        <option value="Ddr" {% if current_station == 'Ddr' %} selected {% endif %}>Dordrecht</option>
+        <option value="Gr" {% if current_station == 'Gr' %} selected {% endif %}>Gorinchem</option>
+        <option value="Ut" {% if current_station == 'Ut' %} selected {% endif %}>Utrecht</option>
+        <option value="Asd" {% if current_station == 'Asd' %} selected {% endif %}>Amsterdam</option>
+        <option value="Rtd" {% if current_station == 'Rtd' %} selected {% endif %}>Rotterdam</option>
+        <option value="Nm" {% if current_station == 'Nm' %} selected {% endif %}>Nijmegen</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+<div class="sdf">
+
+<ul>
+    {% for departure in departureList %}
+        <li>
+            <div>
+                <span style="float: right"><b>Tijd:</b> {{ departure.plannedDateTime[11:16] }}<br></span>
+                <span><b>Richting:</b> {{ departure.direction }}<br></span>
+                <span><b>Trein:</b> {{ departure.product.longCategoryName }}<br></span>
+                <span><b>Spoor:</b> {{ departure.plannedTrack }}<br></span>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+</div>
+
+
+</body>
+</html>

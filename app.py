@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from markupsafe import Markup
+import http.client, urllib.parse, json
 import datetime
 
 app = Flask(__name__)
@@ -96,6 +98,35 @@ def check_kluis():
     })
 
     return 'ingecheckt'
+
+@app.route('/stations', methods=["GET","POST"])
+def findStation():
+    if request.method == "POST":
+        key = {'Ocp-Apim-Subscription-Key': 'd5a7b838aba24fc0945c38492211bb55'}
+
+        params = urllib.parse.urlencode({
+            'maxJourneys': '25',
+            'station': str(request.form['afkorting'])
+        })
+
+        try:
+            conn = http.client.HTTPSConnection('gateway.apiportal.ns.nl')
+            conn.request("GET", "/public-reisinformatie/api/v2/departures?" + params, headers=key)
+
+            response = conn.getresponse()
+            responsetext = response.read()
+            data = json.loads(responsetext)
+
+            depatureList = []
+            for departure in data['payload']['departures']:
+                depatureList.append(departure)
+
+            return render_template('stations.html', departureList=depatureList, current_station=request.form['afkorting'])
+        except Exception as e:
+            return "Station bestaat niet"
+    else:
+        return render_template('stations.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
