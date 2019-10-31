@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-=======
-from flask import Flask, render_template, request, redirect, url_for, session
-from markupsafe import Markup
 import http.client, urllib.parse, json
->>>>>>> 0e84452a962c1713ff2727b27cb9af10cc8cf23e
 import datetime
 
 app = Flask(__name__)
