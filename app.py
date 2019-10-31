@@ -1,24 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import datetime
 
 app = Flask(__name__)
 
 kluizen = [
-    {
-    'nummer': 1,
-    'begintijd': datetime.datetime.now() - datetime.timedelta(days=2),
-    'kaart_nummer': 123
-    },
-    {
-    'nummer': 2,
-    'begintijd': datetime.datetime.now() - datetime.timedelta(days=4),
-    'kaart_nummer': 123
-    }
 
 ]
 
 user = {
-    'kaart_nummer': 123,
+    'kaart_nummer': 767404223470,
     'naam': 'testuser',
     'email': 'test@gmail.com',
     'password': '123'
@@ -60,22 +50,16 @@ def dashboard():
 
     return render_template('dashboard.html', kluizen=userkluizen)
 
-@app.route('/check_kluis')
-def check_kluis():
-
-    # data = request.get_json()
-    # print(data)
+@app.route('/check_kluis/<int:kaart_nummer>/<int:nummer>')
+def check_kluis(kaart_nummer, nummer):
+    # print(kaart_nummer)
+    # print(nummer)
 
     # TODO: database find
 
-    data = {
-        'nummer': 1,
-        'kaart_nummer': 123
-    }
-
     for i in range(len(kluizen)):
-        if data['nummer'] == kluizen[i]['nummer']:
-            if data['kaart_nummer'] == kluizen[i]['kaart_nummer']:
+        if nummer == kluizen[i]['nummer']:
+            if kaart_nummer == kluizen[i]['kaart_nummer']:
 
                 kosten = calc_price(kluizen[i]['begintijd'])
 
@@ -84,18 +68,26 @@ def check_kluis():
                 # TODO: database update
                 kluizen.pop(i)
 
-                print('kluis {} is vrijgegeven.'.format(data['kaart_nummer']))
+                print('kluis {} is vrijgegeven.'.format(kaart_nummer))
 
-                return 'uitgecheckt'
+                print(kluizen)
+
+                return jsonify({
+                    'status': 'uitgecheckt'
+                })
 
     # TODO: database insert
     kluizen.append({
-        'nummer': data['nummer'],
+        'nummer': nummer,
         'begintijd': datetime.datetime.now(),
-        'kaart_nummer': data['kaart_nummer']
+        'kaart_nummer': kaart_nummer
     })
 
-    return 'ingecheckt'
+    print(kluizen)
+
+    return jsonify({
+        'status': 'ingecheckt'
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
