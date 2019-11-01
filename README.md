@@ -1,19 +1,19 @@
 # Fietsenhok Miniproject
 
 ## Getting Started
-In dit document staat de volledige beschrijving om het miniproject in een locale omgeving op te zetten. Aangezien het project in flask wordt redraaid dienen er een aantal packages geinstalleerd te worden
+In dit document staat de volledige beschrijving om het miniproject in een locale omgeving op te zetten. Aangezien het project in flask wordt redraaid dienen er een aantal packages geinstalleerd te worden.
 
 ## Installing
-clone de repository
+clone de repository.
 ```html
 https://github.com/Yanneeh/fietsenhok.git
 ```
-vervolgens moet flask geënstalleerd worden
+vervolgens moet flask geënstalleerd worden.
 ```html
 pip install flask
 ```
 ## Running
-De applicatie kan nu worden gerunt
+De applicatie kan nu worden gerunt.
 ```html
 python app.py
 ```
