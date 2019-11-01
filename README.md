@@ -22,9 +22,9 @@ http://0.0.0.0:8080<br><br>
 Als u in bezit bent van een RFID reader met pas kan deze gebruikt worden om in en uit te checken van de kluis.
 
 ## Contributers
-Yannick,
-Ahmed,
-Ruben.<br>
+Yannick van Diermen,
+Ahmed saleymeh,
+Ruben Heller.<br>
 PROG-V1N-GROEP2
 
 ## Built With
