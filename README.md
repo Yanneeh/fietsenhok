@@ -19,7 +19,7 @@ python app.py
 ```
 er wordt nu een locale omgeving opgezet op 
 http://0.0.0.0:8080<br><br>
-Als u in bezit bent van een RFID reader met pas kan deze gebruikt worden om in en uit te checken van de kluis.
+
 
 ## Contributers
 Yannick van Diermen,
